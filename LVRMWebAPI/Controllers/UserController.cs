@@ -1,5 +1,6 @@
 ﻿using LVRMWebAPI.Models;
 using LVRMWebAPI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace LVRMWebAPI.Controllers
 {
+    [Authorize]
     [Route("api/user-service")]
     [ApiController]
     public class UserController : ControllerBase

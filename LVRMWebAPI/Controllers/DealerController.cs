@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LVRMWebAPI.Controllers
 {
+    [Authorize]
     [Route("api/dealer-service")]
     [ApiController]
     public class DealerController : ControllerBase
