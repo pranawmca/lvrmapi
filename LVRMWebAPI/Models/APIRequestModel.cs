@@ -118,7 +118,7 @@ namespace LVRMWebAPI.Models
             RuleFor(x => x.UserID).NotEmpty().WithMessage("User Id is required");
             //RuleFor(x => x.FirstName).NotEmpty().WithMessage("First Name is required");
             //RuleFor(x => x.LastName).NotEmpty().WithMessage("Last Name is required");
-            //RuleFor(x => x.DealerId).NotEmpty().WithMessage("DealerID is required");
+            RuleFor(x => x.DealerId).NotEmpty().WithMessage("DealerID is required");
             //RuleFor(x => x.Email).EmailAddress().WithMessage("Invalid email address");
             //RuleFor(x => x.Admin).NotEmpty().WithMessage("Admin field is required");
             //RuleFor(x => x.PhoneNumber).Must(CheckNumber).WithMessage("Invalid phone number");
