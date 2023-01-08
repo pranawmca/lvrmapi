@@ -161,8 +161,8 @@ namespace LVRMWebAPI.Models
         public string ReviewInvitationEmail { get; set; }
         public bool RMEnabled { get; set; }
         public bool ReviewWidgetSite { get; set; }
-        public List<ReviewProfiles> reviewProfile { get; set; }
-        public string TrackingScript { get; set; }
+        //public List<ReviewProfiles> reviewProfile { get; set; }
+        public bool TrackingScript { get; set; }
         public string ReviewWidgetContainerTag { get; set; }
         public string Industry { get; set; }
         public string FacebookURL { get; set; }
@@ -193,7 +193,7 @@ namespace LVRMWebAPI.Models
     }
     public class UpdateDealerRequest : DealerRequest
     {
-        public int SourceDealerId { get; set; }
+        //public int SourceDealerId { get; set; }
     }
     public class DealerSearch
     {
@@ -260,19 +260,19 @@ namespace LVRMWebAPI.Models
             RuleFor(x => x.DealerID).NotEmpty().WithMessage("Dealer Id is required");
         }
     }
-
     public class UserReqField
-    {       
+    {
         public int UserID { get; set; }
     }
-    public class UserDeatails:UserReqField
+    public class UserDeatails : UserReqField
     {
         [Key]
         public int DealerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }     
+        public string Email { get; set; }
         public string PhoneNumber { get; set; }
     }
+
 
 }

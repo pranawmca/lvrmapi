@@ -8,6 +8,9 @@ namespace LVRMWebAPI.Repository
 {
     public interface IUserRepository
     {
-        List<UserDeatails> GetUserList(UserReqField _objUserReqField);
+        List<UserDeatails> GetUserList(UserReqField _objUserReq);
+        int AddUser(UserRequest _objUserFields);
+        int UpdateUser(UpdateUserRequest _objUserFields);
+        int DeleteUser(DeleteUserRequest _objDeleteUserFields);
     }
 }
