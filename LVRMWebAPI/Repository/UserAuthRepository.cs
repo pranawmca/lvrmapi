@@ -4,7 +4,7 @@
     {
         public bool ValidateCredentials(string username, string password)
         {
-            return username.Equals("admin") && password.Equals("Pa$$WoRd");
+            return username.Equals("dealercarsearch") && password.Equals("repmanapi1!");
         }
     }
 }
