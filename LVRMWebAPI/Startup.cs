@@ -42,6 +42,7 @@ namespace LVRMWebAPI
             services.AddScoped<IJobPlaceIDServiecs, JobPlaceIdService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IDealerRepository, DealerRepository>();
+            services.AddScoped<IUserAuthRepository, UserAuthRepository>();
             services.AddControllers()
                 .AddFluentValidation(s =>
                 {
