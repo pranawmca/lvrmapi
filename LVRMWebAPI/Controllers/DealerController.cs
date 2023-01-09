@@ -25,7 +25,7 @@ namespace LVRMWebAPI.Controllers
         [Route("getDealer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetDealers(DealerSearch _objDealerSearch)
+        public async Task<IActionResult> getDealer(DealerSearch _objDealerSearch)
         {
             Response _objResponse = new Response();
             if (_objDealerSearch == null)
@@ -43,10 +43,10 @@ namespace LVRMWebAPI.Controllers
 
 
         [HttpPost]
-        [Route("adddealer")]
+        [Route("addDealer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddDealer(DealerRequest _objDealerFields)
+        public async Task<IActionResult> addDealer(DealerRequest _objDealerFields)
         {
             Response _objResponse = new Response();
             DealerResponse _dealerResponse = new DealerResponse();
@@ -80,10 +80,10 @@ namespace LVRMWebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("updatedealer")]
+        [Route("updateDealer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateDealer(UpdateDealerRequest _objUpdateDealerFields)
+        public async Task<IActionResult> updateDealer(UpdateDealerRequest _objUpdateDealerFields)
         {
             Response _objResponse = new Response();
             UpdateDealerResponse _objUpdateDealerResponse = new UpdateDealerResponse();
@@ -116,10 +116,10 @@ namespace LVRMWebAPI.Controllers
             }
         }
         [HttpDelete]
-        [Route("deletedealer")]
+        [Route("deleteDealer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteDealer(DeleteDealerRequest _objDeleteDealerRequest)
+        public async Task<IActionResult> deleteDealer(DeleteDealerRequest _objDeleteDealerRequest)
         {
 
             Response _objResponse = new Response();

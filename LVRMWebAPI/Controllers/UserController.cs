@@ -22,7 +22,7 @@ namespace LVRMWebAPI.Controllers
             userRepository = _userRepository;
         }
         [HttpPost]
-        [Route("GetUsers")]
+        [Route("getUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetUsers(UserReqField _objUserUser)
@@ -99,7 +99,7 @@ namespace LVRMWebAPI.Controllers
 
 
         [HttpPost]
-        [Route("adduser")]
+        [Route("addUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddUser(UserRequest _objUserFields)
@@ -158,7 +158,7 @@ namespace LVRMWebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("updateuser")]
+        [Route("updateUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateUser(UpdateUserRequest _objUserFields)
@@ -209,7 +209,7 @@ namespace LVRMWebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteuser")]
+        [Route("deleteUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteUser(DeleteUserRequest _objDeleteUserRequest)
