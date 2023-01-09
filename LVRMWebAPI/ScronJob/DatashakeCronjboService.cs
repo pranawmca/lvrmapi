@@ -21,7 +21,7 @@ namespace LVRMWebAPI.ScronJob
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            bool 
+         
             while (!stoppingToken.IsCancellationRequested)
             {
 
