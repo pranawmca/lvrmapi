@@ -21,22 +21,14 @@ namespace LVRMWebAPI.ScronJob
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
+            bool 
             while (!stoppingToken.IsCancellationRequested)
             {
+
+
                 //create data sahke api
                 List<Employees> objEmployeeList = new List<Employees>();
-                for (int i = 0; i < 10000; i++)
-                {
-                    Employees objEmployee = new Employees()
-                    {
-                        EmpID = 0,
-                        Name = "Tasauwar" + i,
-                        Department = "IT" + i
-                    };
-                    // employeesRepository.AddEmployees(objEmployee);
-                    objEmployeeList.Add(objEmployee);
-                }
+               
                 objEmployeeList.AsParallel()
                   .WithDegreeOfParallelism(Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0)))
                 .ForAll(itemId =>
