@@ -27,9 +27,9 @@ namespace LVRMWebAPI.ScronJob
 
 
                 //create data sahke api
-                List<Employees> objEmployeeList = new List<Employees>();
-               
-                objEmployeeList.AsParallel()
+                List<DatashakeReviewField> obReviewList = new List<DatashakeReviewField>();
+
+                obReviewList.AsParallel()
                   .WithDegreeOfParallelism(Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0)))
                 .ForAll(itemId =>
                 {
