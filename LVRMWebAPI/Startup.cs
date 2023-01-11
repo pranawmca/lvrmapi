@@ -36,21 +36,24 @@ namespace LVRMWebAPI
         // Test Suresh Tripathi
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IScopedSevices, MyScopServices>();
-            services.AddHostedService<DatashakeCronjboService>();
-            services.AddScoped<IDatashakeRepository, DatashakeRepository>();
+            
+            
             services.AddDbContext<PSM_DevContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:DBConnectionPSM"]));
-            services.AddScoped<IJobPlaceIdRepository, JobPlaceIdRepository>();
-            services.AddScoped<IJobPlaceIDServiecs, JobPlaceIdService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IDealerRepository, DealerRepository>();
-            services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+ 
             services.AddControllers()
                 .AddFluentValidation(s =>
                 {
                     s.RegisterValidatorsFromAssemblyContaining<Startup>();
                     s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
+            services.AddScoped<IJobPlaceIdRepository, JobPlaceIdRepository>();
+            services.AddScoped<IJobPlaceIDServiecs, JobPlaceIdService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDealerRepository, DealerRepository>();
+            services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+            services.AddScoped<IDatashakeRepository, DatashakeRepository>();
+            services.AddScoped<IScopedSevices, MyScopServices>();
+            //services.AddHostedService<DatashakeCronjboService>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
             {

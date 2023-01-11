@@ -46,10 +46,10 @@ namespace LVRMWebAPI.Repository
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.USP_TestReviewSchedular")
-                  .WithSqlParam("place_id", "dafasdf83839")
-                  .WithSqlParam("job_id", "100")
+                  .WithSqlParam("place_id", _objEmploye.Department)
+                  .WithSqlParam("job_id", _objEmploye.EmpID)
                   .WithSqlParam("review_count", "200")
-                  .WithSqlParam("Source", "994")
+                  .WithSqlParam("Source", "source"+ _objEmploye.EmpID)
                   .WithSqlParam("ReviewID", "2929")
                   .WithSqlParam("FirstName", _objEmploye.Name)
 
