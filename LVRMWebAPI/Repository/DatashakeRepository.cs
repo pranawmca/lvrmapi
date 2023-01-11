@@ -38,23 +38,23 @@ namespace LVRMWebAPI.Repository
             }
         }
 
-        public int AddDatashakeReview(DatashakeReviewField _objDatashakeReview)
+        public int AddDatashakeReview(Review _objDatashakeReview)
         {
             try
             {
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeReviewSchedular")
-                  .WithSqlParam("PlaceID", _objDatashakeReview.PlaceID)
-                  .WithSqlParam("JobID", _objDatashakeReview.JobID)
-                  .WithSqlParam("ReviewCount", _objDatashakeReview.ReviewCount)
-                  .WithSqlParam("Source", "google")
-                  .WithSqlParam("ReviewID", _objDatashakeReview.ReviewID)
-                  .WithSqlParam("FirstName", _objDatashakeReview.FirstName)
-                  .WithSqlParam("LastName", _objDatashakeReview.LastName)
-                  .WithSqlParam("ReviewDate", _objDatashakeReview.ReviewDate)
-                  .WithSqlParam("Rating", _objDatashakeReview.Rating)
-                  .WithSqlParam("ReviewDesc", _objDatashakeReview.ReviewDesc)
+                  .WithSqlParam("PlaceID", "")//string
+                  .WithSqlParam("JobID", 0)  //int
+                  .WithSqlParam("ReviewCount", 0)//int
+                  .WithSqlParam("Source", "google")// all string below
+                  .WithSqlParam("ReviewID", _objDatashakeReview.id)
+                  .WithSqlParam("FirstName", _objDatashakeReview.name)
+                  .WithSqlParam("LastName", "")
+                  .WithSqlParam("ReviewDate", _objDatashakeReview.date)
+                  .WithSqlParam("Rating", _objDatashakeReview.rating_value)
+                  .WithSqlParam("ReviewDesc", _objDatashakeReview.review_text)
                   .ExecuteStoredProc((handler) =>
                   {
                       objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();

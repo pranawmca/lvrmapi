@@ -36,8 +36,6 @@ namespace LVRMWebAPI
         // Test Suresh Tripathi
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            
             services.AddDbContext<PSM_DevContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:DBConnectionPSM"]));
  
             services.AddControllers()
@@ -53,6 +51,7 @@ namespace LVRMWebAPI
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
             services.AddScoped<IDatashakeRepository, DatashakeRepository>();
             services.AddScoped<IScopedSevices, MyScopServices>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
             //services.AddHostedService<DatashakeCronjboService>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
