@@ -50,16 +50,17 @@ namespace LVRMWebAPI.ScronJob
                         {
                         // Setp 2: Call datasahke api
 
-                        List<Employees> objEmployeeList = new List<Employees>();
-                            for (int j = 0; j < 1000; j++)
-                            {
+                        List<DatashakeReviewField> objEmployeeList = new List<DatashakeReviewField>();
+                        //    for (int j = 0; j < 1000; j++)
+                        //    {
 
-                                Employees employees = new Employees();
-                                employees.EmpID = Convert.ToInt32(objPlaceIDJobDetail[i].DealerID);
-                                employees.Department = objPlaceIDJobDetail[i].JobID + j;
-                                employees.Name = objPlaceIDJobDetail[i].JobID + j;
-                                objEmployeeList.Add(employees);
-                            }
+                        //        Employees employees = new Employees();
+                        //        employees.EmpID = Convert.ToInt32(objPlaceIDJobDetail[i].DealerID);
+                        //        employees.Department = objPlaceIDJobDetail[i].JobID + j;
+                        //        employees.Name = objPlaceIDJobDetail[i].JobID + j;
+                        //        objEmployeeList.Add(employees);
+                        //    }
+
                             objEmployeeList.AsParallel()
                               .WithDegreeOfParallelism(Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0)))
                             .ForAll(itemId =>
@@ -90,6 +91,5 @@ namespace LVRMWebAPI.ScronJob
             return base.StopAsync(cancellationToken);
         }
     }
-
 
 }

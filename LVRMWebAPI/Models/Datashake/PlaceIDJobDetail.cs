@@ -7,6 +7,7 @@ namespace LVRMWebAPI.Models.Datashake
 {
     public class PlaceIDJobDetail
     {
+        public int ID { get; set; }
         public string DealerID { get; set; }
         public string PlaceID { get; set; }
         public string JobID { get; set; }

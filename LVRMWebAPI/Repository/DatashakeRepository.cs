@@ -20,39 +20,41 @@ namespace LVRMWebAPI.Repository
             try
             {
                 //UserResponse _objResponse = new UserResponse();
-                IList<PlaceIDJobDetail> userlist = new List<PlaceIDJobDetail>();
-                pSM_DevContext.LoadStoredProc("dbo.GetUsersFromApi")
-                   .WithSqlParam("PlaceID", PlaceID)
+                IList<PlaceIDJobDetail> placeIDList = new List<PlaceIDJobDetail>();
+                pSM_DevContext.LoadStoredProc("dbo.GET_PlaceID_DealerID")
                    .WithSqlParam("DealerID", DealerID)
+                   .WithSqlParam("PlaceID", PlaceID)
                    .ExecuteStoredProc((handler) =>
                    {
-                       userlist = handler.ReadToList<PlaceIDJobDetail>().ToList();
+                       placeIDList = handler.ReadToList<PlaceIDJobDetail>().ToList();
                        // do something with your results.
                    });
-                return userlist.ToList();
+                return placeIDList.ToList();
             }
 
             catch
             {
-
                 throw;
             }
         }
 
-        public int AddUser(Employees _objEmploye)
+        public int AddDatashakeReview(DatashakeReviewField _objDatashakeReview)
         {
             try
             {
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
-                pSM_DevContext.LoadStoredProc("dbo.USP_TestReviewSchedular")
-                  .WithSqlParam("place_id", _objEmploye.Department)
-                  .WithSqlParam("job_id", _objEmploye.EmpID)
-                  .WithSqlParam("review_count", "200")
-                  .WithSqlParam("Source", "source"+ _objEmploye.EmpID)
-                  .WithSqlParam("ReviewID", "2929")
-                  .WithSqlParam("FirstName", _objEmploye.Name)
-
+                pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeReviewSchedular")
+                  .WithSqlParam("PlaceID", _objDatashakeReview.PlaceID)
+                  .WithSqlParam("JobID", _objDatashakeReview.JobID)
+                  .WithSqlParam("ReviewCount", _objDatashakeReview.ReviewCount)
+                  .WithSqlParam("Source", "google")
+                  .WithSqlParam("ReviewID", _objDatashakeReview.ReviewID)
+                  .WithSqlParam("FirstName", _objDatashakeReview.FirstName)
+                  .WithSqlParam("LastName", _objDatashakeReview.LastName)
+                  .WithSqlParam("ReviewDate", _objDatashakeReview.ReviewDate)
+                  .WithSqlParam("Rating", _objDatashakeReview.Rating)
+                  .WithSqlParam("ReviewDesc", _objDatashakeReview.ReviewDesc)
                   .ExecuteStoredProc((handler) =>
                   {
                       objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
