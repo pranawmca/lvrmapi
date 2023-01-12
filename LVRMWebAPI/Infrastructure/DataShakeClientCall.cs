@@ -34,25 +34,28 @@ namespace LVRMWebAPI.Infrastructure
                     endpoint = "https://app.datashake.com/api/v2/profiles/reviews?per_page=500&page=" + i + "&job_id=" + Jobid;
                     HttpResponseMessage objrespons = httpClient.GetAsync(endpoint).Result;
                     string data = objrespons.Content.ReadAsStringAsync().Result;
-                    reviewresult = JsonConvert.DeserializeObject<DataShakeApiResponseModel>(data);
-                    if (reviewresult.crawl_status == "complete")
+                    if (data != null)
                     {
-                        if (reviewresult.reviews.Count == 0)
+                        reviewresult = JsonConvert.DeserializeObject<DataShakeApiResponseModel>(data);
+                        if (reviewresult.crawl_status == "complete")
                         {
-                            break;
-                        }
-                        if (i == 1)
-                        {
-                            Totalreview = reviewresult;
+                            if (reviewresult.reviews.Count == 0)
+                            {
+                                break;
+                            }
+                            if (i == 1)
+                            {
+                                Totalreview = reviewresult;
+                            }
+                            else
+                            {
+                                Totalreview.reviews.AddRange(reviewresult.reviews);
+                            }
                         }
                         else
                         {
-                            Totalreview.reviews.AddRange(reviewresult.reviews);
+                            break;
                         }
-                    }
-                    else
-                    {
-                        break;
                     }
                 }
 

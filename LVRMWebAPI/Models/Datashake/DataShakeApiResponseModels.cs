@@ -45,4 +45,12 @@ namespace LVRMWebAPI.Models.Datashake
         public object blocks { get; set; }
         public List<Review> reviews { get; set; }
     }
+
+    public class DatashakeJobIDDetails
+    {
+        public string DealerId { get;set; }
+        public string PlaceID { get; set; }
+        public string JobID { get; set; }
+        public string ReviewCount { get; set; }
+    }
 }

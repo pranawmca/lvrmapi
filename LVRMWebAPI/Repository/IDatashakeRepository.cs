@@ -6,6 +6,7 @@ namespace LVRMWebAPI.Repository
     public interface IDatashakeRepository
     {
         List<PlaceIDJobDetail> GetPlaceidwithjobid(string DealerID, string PlaceID);
-        int AddDatashakeReview(Review _objDatashakeReview);
+        int AddDatashakeReview(Review _objDatashakeReview, string dealerid);
+        //int UpdateDatashakeJobID(DatashakeJobIDDetails _objJobIDDetails);
     }
 }

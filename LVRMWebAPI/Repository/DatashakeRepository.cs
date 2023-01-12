@@ -38,23 +38,25 @@ namespace LVRMWebAPI.Repository
             }
         }
 
-        public int AddDatashakeReview(Review _objDatashakeReview)
+        public int AddDatashakeReview(Review _objDatashakeReview, string dealerid)
         {
             try
             {
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeReviewSchedular")
-                  .WithSqlParam("PlaceID", "00")//string
+                  .WithSqlParam("DealerID", dealerid)//string
+                  .WithSqlParam("PlaceID", "")//string
                   .WithSqlParam("JobID", "0")  //int
                   .WithSqlParam("ReviewCount", "0")//int
                   .WithSqlParam("Source", "google")// all string below
-                  .WithSqlParam("ReviewID", "2020")
+                  .WithSqlParam("ReviewID", _objDatashakeReview.id)
                   .WithSqlParam("FirstName", _objDatashakeReview.name)
                   .WithSqlParam("LastName", "")
-                  .WithSqlParam("ReviewDate",DateTime.Now.ToString())
-                  .WithSqlParam("Rating", "2")
+                  .WithSqlParam("ReviewDate", _objDatashakeReview.date)
+                  .WithSqlParam("Rating", _objDatashakeReview.rating_value)
                   .WithSqlParam("ReviewDesc", _objDatashakeReview.review_text)
+                  .WithSqlParam("ProfilePic", _objDatashakeReview.profile_picture)
                   .ExecuteStoredProc((handler) =>
                   {
                       objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
@@ -70,6 +72,8 @@ namespace LVRMWebAPI.Repository
                 throw;
             }
         }
+
+        
     }
 
 

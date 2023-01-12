@@ -1,6 +1,7 @@
 ﻿using LVRMWebAPI.Extension;
 using LVRMWebAPI.Models;
 using LVRMWebAPI.Models.Datashake;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,59 @@ namespace LVRMWebAPI.Repository
                 return placeIDList.ToList();
             }
 
+            catch
+            {
+                throw;
+            }
+        }
+
+        public int UpdateDatashakeJobID(DatashakeJobIDDetails _objJobIDDetails)
+        {
+            try
+            {
+                int result = 0;
+                ReulstMsg objResult = new ReulstMsg();
+                PSM_DevContext _pSM_DevContext = new PSM_DevContext();
+                _pSM_DevContext.LoadStoredProc("dbo.UpdateJobIDDeatails")
+                  .WithSqlParam("DealerID", _objJobIDDetails.DealerId)//string
+                  .WithSqlParam("PlaceID", _objJobIDDetails.PlaceID)//string
+                  .WithSqlParam("JobID", _objJobIDDetails.JobID)  //string
+                  .WithSqlParam("ReviewCount", _objJobIDDetails.ReviewCount)//string
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
+                      // do something with your results.
+                  });
+
+                result = Convert.ToInt32(objResult.Message);
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public int UpdateJobIDByPlaceID(DatashakeJobIDDetails _objJobIDDetails)
+        {
+            try
+            {
+                int result = 0;
+                ReulstMsg objResult = new ReulstMsg();
+                PSM_DevContext _pSM_DevContext = new PSM_DevContext();
+                _pSM_DevContext.LoadStoredProc("dbo.UpdateJobIDByPlaceID")
+                  .WithSqlParam("DealerID", _objJobIDDetails.DealerId)//string
+                  .WithSqlParam("PlaceID", _objJobIDDetails.PlaceID)//string
+                  .WithSqlParam("JobID", _objJobIDDetails.JobID)  //string
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
+                      // do something with your results.
+                  });
+
+                result = Convert.ToInt32(objResult.Message);
+                return result;
+            }
             catch
             {
                 throw;

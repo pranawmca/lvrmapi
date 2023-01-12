@@ -48,15 +48,21 @@ namespace LVRMWebAPI.ScronJob
                     {
                         // Setp 2: Call datasahke api with Place id to get job id
                         int jobid = 0;
-                        // object objPlaceIdResponse = DataShakeClientCall.GetDataShakeAPIPlaceidResponse(objPlaceIDJobDetail[i].PlaceID, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
+                        //object objPlaceIdResponse = DataShakeClientCall.GetDataShakeAPIPlaceidResponse(objPlaceIDJobDetail[i].PlaceID, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
                         object objPlaceIdResponse = "{\"success\":true,\"job_id\":453375210,\"status\":200,\"message\":\"Added this profile to the queue...\"}";
 
                         var data = (JObject)JsonConvert.DeserializeObject(objPlaceIdResponse.ToString());
                         if (Convert.ToBoolean(((Newtonsoft.Json.Linq.JValue)data["success"]).Value))
                         {
                             jobid = Convert.ToInt32(((Newtonsoft.Json.Linq.JValue)data["job_id"]).Value);
-                        }
-                        // save job id and isrun to database here
+                        }                       
+                        #region update job id and isrun to database here
+                        DatashakeJobIDDetails _objUpdateJobID = new DatashakeJobIDDetails();
+                        _objUpdateJobID.DealerId = objPlaceIDJobDetail[i].DealerID;
+                        _objUpdateJobID.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                        _objUpdateJobID.JobID = jobid.ToString();
+                        int updateJobIDResult = ObjreviewRepository.UpdateJobIDByPlaceID(_objUpdateJobID);
+                        #endregion
                         //
                         //get review from datashake api
                         DataShakeApiResponseModel objReviewResponse = DataShakeClientCall.GetDataShakeAPIResponse(jobid, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
@@ -74,10 +80,20 @@ namespace LVRMWebAPI.ScronJob
                                 {
                                     _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
                                     var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
-                                    scopedService.RunSchedular(itemId);
+                                    scopedService.RunSchedular(itemId, objPlaceIDJobDetail[i].DealerID);
                                 }
                             });
+                            #region update jobid
+                            DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
+                            _objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
+                            _objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                            _objJobDetails.JobID = jobid.ToString();
+                            _objJobDetails.ReviewCount = objReviewResponse.review_count.ToString();
+                            int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
+                            #endregion
                         }
+
+
 
                     }
                 }
