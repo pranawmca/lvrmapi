@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace LVRMWebAPI.Repository
 {
-    public class ReviewRepository: IReviewRepository
+    public class ReviewRepository //: IReviewRepository
     {
-        public readonly PSM_DevContext pSM_DevContext;
-        public ReviewRepository(PSM_DevContext _pSM_DevContext)
-        {
-            pSM_DevContext = _pSM_DevContext;
-        }
+        //public readonly PSM_DevContext pSM_DevContext;
+        //public ReviewRepository(PSM_DevContext _pSM_DevContext)
+        //{
+        //    pSM_DevContext = _pSM_DevContext;
+        //}
         public string getname()
         {
             return "test";
@@ -21,9 +21,10 @@ namespace LVRMWebAPI.Repository
         {
             try
             {
+                PSM_DevContext _pSM_DevContext = new PSM_DevContext();
                 //UserResponse _objResponse = new UserResponse();
                 IList<PlaceIDJobDetail> placeIDList = new List<PlaceIDJobDetail>();
-                pSM_DevContext.LoadStoredProc("dbo.GET_PlaceID_DealerID")
+                _pSM_DevContext.LoadStoredProc("dbo.GET_PlaceID_DealerID")
                    .WithSqlParam("DealerID", DealerID)
                    .WithSqlParam("PlaceID", PlaceID)
                    .ExecuteStoredProc((handler) =>

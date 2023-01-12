@@ -45,15 +45,15 @@ namespace LVRMWebAPI.Repository
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeReviewSchedular")
-                  .WithSqlParam("PlaceID", "")//string
-                  .WithSqlParam("JobID", 0)  //int
-                  .WithSqlParam("ReviewCount", 0)//int
+                  .WithSqlParam("PlaceID", "00")//string
+                  .WithSqlParam("JobID", "0")  //int
+                  .WithSqlParam("ReviewCount", "0")//int
                   .WithSqlParam("Source", "google")// all string below
-                  .WithSqlParam("ReviewID", _objDatashakeReview.id)
+                  .WithSqlParam("ReviewID", "2020")
                   .WithSqlParam("FirstName", _objDatashakeReview.name)
                   .WithSqlParam("LastName", "")
-                  .WithSqlParam("ReviewDate", _objDatashakeReview.date)
-                  .WithSqlParam("Rating", _objDatashakeReview.rating_value)
+                  .WithSqlParam("ReviewDate",DateTime.Now.ToString())
+                  .WithSqlParam("Rating", "2")
                   .WithSqlParam("ReviewDesc", _objDatashakeReview.review_text)
                   .ExecuteStoredProc((handler) =>
                   {
