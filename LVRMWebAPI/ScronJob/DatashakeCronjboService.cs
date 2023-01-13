@@ -19,15 +19,10 @@ namespace LVRMWebAPI.ScronJob
     {
         private readonly ILogger<DatashakeCronjboService> _logger;
         private readonly IServiceProvider _serviceProvider;
-        private readonly IDatashakeRepository _dataShakeRepo;
-        private readonly IReviewRepository _reviewRepository;
-        private static bool _isFlag = false;
         public DatashakeCronjboService(IServiceProvider serviceProvider, ILogger<DatashakeCronjboService> _logger)//, 
         {
             this._logger = _logger;
             _serviceProvider = serviceProvider;
-            //_reviewRepository = reviewRepository;
-            //this._dataShakeRepo = _dataShakeRepo;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -44,61 +39,93 @@ namespace LVRMWebAPI.ScronJob
                 //List<PlaceIDJobDetail> objPlaceIDJobDetail = new List<PlaceIDJobDetail>();
                 if (objPlaceIDJobDetail != null && objPlaceIDJobDetail.Count > 0)
                 {
+
                     for (int i = 0; i < objPlaceIDJobDetail.Count; i++)
                     {
-                        // Setp 2: Call datasahke api with Place id to get job id
-                        int jobid = 0;
-                        //object objPlaceIdResponse = DataShakeClientCall.GetDataShakeAPIPlaceidResponse(objPlaceIDJobDetail[i].PlaceID, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
-                        object objPlaceIdResponse = "{\"success\":true,\"job_id\":453375210,\"status\":200,\"message\":\"Added this profile to the queue...\"}";
-
-                        var data = (JObject)JsonConvert.DeserializeObject(objPlaceIdResponse.ToString());
-                        if (Convert.ToBoolean(((Newtonsoft.Json.Linq.JValue)data["success"]).Value))
+                        try
                         {
-                            jobid = Convert.ToInt32(((Newtonsoft.Json.Linq.JValue)data["job_id"]).Value);
-                        }                       
-                        #region update job id and isrun to database here
-                        DatashakeJobIDDetails _objUpdateJobID = new DatashakeJobIDDetails();
-                        _objUpdateJobID.DealerId = objPlaceIDJobDetail[i].DealerID;
-                        _objUpdateJobID.PlaceID = objPlaceIDJobDetail[i].PlaceID;
-                        _objUpdateJobID.JobID = jobid.ToString();
-                        int updateJobIDResult = ObjreviewRepository.UpdateJobIDByPlaceID(_objUpdateJobID);
-                        #endregion
-                        //
-                        //get review from datashake api
-                        DataShakeApiResponseModel objReviewResponse = DataShakeClientCall.GetDataShakeAPIResponse(jobid, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
-                        var average_rating = objReviewResponse.average_rating;
-                        var source_name = objReviewResponse.source_name;
-
-                        if (objReviewResponse.reviews.Count > 0)
-                        {
-                            //List<DatashakeReviewField> objEmployeeList = new List<DatashakeReviewField>();
-                            objReviewResponse.reviews.AsParallel()
-                              .WithDegreeOfParallelism(Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0)))
-                            .ForAll(itemId =>
+                            string jobid = string.Empty;
+                            if (string.IsNullOrWhiteSpace(objPlaceIDJobDetail[i].JobID))
                             {
-                                using (var scope = _serviceProvider.CreateScope())
+                                //Data shake API with placeid only.
+
+                                object objPlaceIdResponse = DataShakeClientCall.GetDataShakeAPIPlaceidResponse(objPlaceIDJobDetail[i].PlaceID, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
+                                // object objPlaceIdResponse = "{\"success\":true,\"job_id\":453375210,\"status\":200,\"message\":\"Added this profile to the queue...\"}";
+                                var data = (JObject)JsonConvert.DeserializeObject(objPlaceIdResponse.ToString());
+                                if (Convert.ToBoolean(((Newtonsoft.Json.Linq.JValue)data["success"]).Value))
                                 {
-                                    _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
-                                    var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
-                                    scopedService.RunSchedular(itemId, objPlaceIDJobDetail[i].DealerID);
+                                    jobid = Convert.ToString(((Newtonsoft.Json.Linq.JValue)data["job_id"]).Value);
                                 }
-                            });
+                            }
+                            else
+                            {
+
+                                jobid = objPlaceIDJobDetail[i].JobID;
+                            }
+                            #region update job id and isrun to database here
+                            DatashakeJobIDDetails _objUpdateJobID = new DatashakeJobIDDetails();
+                            _objUpdateJobID.DealerId = objPlaceIDJobDetail[i].DealerID;
+                            _objUpdateJobID.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                            _objUpdateJobID.JobID = jobid;
+                            _objUpdateJobID.Status = "Running";
+                            int updateJobIDResult = ObjreviewRepository.UpdateJobIDByPlaceID(_objUpdateJobID);
+                            #endregion
+                            int totalCount = 0;
+                            //get review from datashake api
+                            if (!string.IsNullOrWhiteSpace(jobid))
+                            {
+                                DataShakeApiResponseModel objReviewResponse = DataShakeClientCall.GetDataShakeAPIResponse(Convert.ToInt32(jobid), "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
+
+                                if (objReviewResponse != null)
+                                {
+                                    if (objReviewResponse.reviews?.Count > 0)
+                                    {
+                                        var average_rating = objReviewResponse.average_rating;
+                                        var source_name = objReviewResponse.source_name;
+
+                                        if (objReviewResponse.reviews.Count > 0)
+                                        {
+                                            //List<DatashakeReviewField> objEmployeeList = new List<DatashakeReviewField>();
+                                            objReviewResponse.reviews.AsParallel()
+                                              .WithDegreeOfParallelism(Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0)))
+                                            .ForAll(itemId =>
+                                            {
+                                                using (var scope = _serviceProvider.CreateScope())
+                                                {
+                                                    _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
+                                                    var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
+                                                    scopedService.RunSchedular(itemId, objPlaceIDJobDetail[i].DealerID);
+                                                }
+                                            });
+
+                                            totalCount = objReviewResponse.reviews.Count;
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+
+
+                        }
+                        catch
+                        {
                             #region update jobid
                             DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
                             _objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
                             _objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
-                            _objJobDetails.JobID = jobid.ToString();
-                            _objJobDetails.ReviewCount = objReviewResponse.review_count.ToString();
+                            _objJobDetails.JobID = string.Empty;
+                            _objJobDetails.ReviewCount ="0";
                             int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
                             #endregion
                         }
 
-
-
                     }
+
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(20), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken);
                 Console.WriteLine("Background services started");
             }
 

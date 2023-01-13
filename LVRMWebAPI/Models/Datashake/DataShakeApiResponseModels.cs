@@ -52,5 +52,6 @@ namespace LVRMWebAPI.Models.Datashake
         public string PlaceID { get; set; }
         public string JobID { get; set; }
         public string ReviewCount { get; set; }
+        public string Status { get; set; }
     }
 }
