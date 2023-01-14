@@ -94,5 +94,29 @@ namespace LVRMWebAPI.Repository
                 throw;
             }
         }
+
+        public int UpdateDatashakeLog(string MessageLog)
+        {
+            try
+            {
+                int result = 0;
+                ReulstMsg objResult = new ReulstMsg();
+                PSM_DevContext _pSM_DevContext = new PSM_DevContext();
+                _pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeLog")
+                  .WithSqlParam("Message", MessageLog)//string
+                 .ExecuteStoredProc((handler) =>
+                  {
+                      objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
+                      // do something with your results.
+                  });
+
+                result = Convert.ToInt32(objResult.Message);
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
