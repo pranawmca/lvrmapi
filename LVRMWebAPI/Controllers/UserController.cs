@@ -21,6 +21,36 @@ namespace LVRMWebAPI.Controllers
         {
             userRepository = _userRepository;
         }
+        [HttpGet]
+        [Route("getUser/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetUserById(int userId)
+        {
+            Response _objResponse = new Response();
+            if (userId == 0)
+            {
+                return BadRequest("Invalid payload");
+            }
+            if (!ModelState.IsValid)
+            {
+
+            }
+            UserDeatails _objUserDetail = new UserDeatails();
+            _objUserDetail = userRepository.GetUserDetail(userId);
+            if (_objUserDetail!=null && _objUserDetail.FirstName != null && _objUserDetail.FirstName != "")
+                return Ok(_objUserDetail);
+            else
+            {
+                _objResponse.Data = "";
+                _objResponse.Message = "User does not exists.";
+                _objResponse.Status = false;
+                _objResponse.StatusCode = (System.Net.HttpStatusCode)409;
+                return BadRequest(_objResponse);
+            }
+        }
+
+
         [HttpPost]
         [Route("getUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -110,27 +140,33 @@ namespace LVRMWebAPI.Controllers
             {
                 return BadRequest("Invalid payload");
             }
-            Random r = new Random(4);
-            int number = r.Next();
-            string pass = "psm" + number.ToString();
-            _objUserFields.Password = pass;
-            if (!ModelState.IsValid)
+            if (string.IsNullOrEmpty(_objUserFields.Password))
             {
+                Random r = new Random(4);
+                int number = r.Next();
+                string pass = "psm" + number.ToString();
+                _objUserFields.Password = pass;
+            }          
+            //if (!ModelState.IsValid)
+            //{
 
-            }
-
+            //}
             int resultResponse = userRepository.AddUser(_objUserFields);
             if (resultResponse > 0)
             {
                 _objAddUserResp.UserId = resultResponse.ToString();
+
                 _objAddUserResp.FirstName = _objUserFields.FirstName;
                 _objAddUserResp.LastName = _objUserFields.LastName;
                 _objAddUserResp.UserName = _objUserFields.Email;
-                _objAddUserResp.Password = pass;
+                _objAddUserResp.Email = _objUserFields.Email;
+                _objAddUserResp.Admin = _objUserFields.Admin == 1 ? false : true;
+                _objAddUserResp.PhoneNumber = _objUserFields.PhoneNumber;
+                _objAddUserResp.Department = _objUserFields.Department;
                 _objResponse.Data = _objAddUserResp;
                 _objResponse.Message = "User Created Successfully.";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.Created;
+                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else
@@ -139,8 +175,7 @@ namespace LVRMWebAPI.Controllers
                 {
                     _objResponse.Data = "";
                     _objResponse.Message = "Email ID already exists.";
-                    _objResponse.Status = false;
-                    //_objResponse.StatusCode = HttpStatusCode.InternalServerError;
+                    _objResponse.Status = false;         
                     _objResponse.StatusCode = (System.Net.HttpStatusCode)409;
                     return BadRequest(_objResponse);
 
@@ -168,15 +203,11 @@ namespace LVRMWebAPI.Controllers
             if (_objUserFields == null)
             {
                 return BadRequest("Invalid payload");
-            }
-            //Random r = new Random(4);
-            //int number = r.Next();
-            //string pass = "psm" + number.ToString();
-            //_objUserFields.Password = pass;
-            if (!ModelState.IsValid)
-            {
+            }           
+            //if (!ModelState.IsValid)
+            //{
 
-            }
+            //}
             int resultResponse = userRepository.UpdateUser(_objUserFields);
             if (resultResponse == 2000)
             {

@@ -16,6 +16,26 @@ namespace LVRMWebAPI.Repository
         {
             pSM_DevContext = _pSM_DevContext;
         }
+        public UserDeatails GetUserDetail(int userId)
+        {
+            try
+            {               
+                UserDeatails userdetail= new UserDeatails();
+                pSM_DevContext.LoadStoredProc("dbo.GetUserByIdApi")
+                   .WithSqlParam("KeyUserId", userId)
+                   .ExecuteStoredProc((handler) =>
+                   {
+                       userdetail = handler.ReadToList<UserDeatails>().FirstOrDefault();
+                       // do something with your results.
+                   });
+                return userdetail;
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public List<UserDeatails> GetUserList(UserReqField _objUserReq)
         {
             try

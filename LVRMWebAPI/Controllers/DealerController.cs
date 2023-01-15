@@ -21,6 +21,28 @@ namespace LVRMWebAPI.Controllers
         {
             dealerRepository = _dealerRepository;
         }
+
+        [HttpGet]
+        [Route("getDealer/{dealerID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> getDealerByID(int dealerID)
+        {
+            Response _objResponse = new Response();
+            DealerResponses _objResp = new DealerResponses();
+            _objResp = dealerRepository.GetDealerById(dealerID);
+            if (_objResp!=null && _objResp.DealerName != null && _objResp.DealerName != "")
+                return Ok(_objResp);
+            else
+            {
+                _objResponse.Data = "";
+                _objResponse.Message = "Dealer does not exists.";
+                _objResponse.Status = false;
+                _objResponse.StatusCode = (System.Net.HttpStatusCode)409;
+                return BadRequest(_objResponse);
+            }
+        }
+
         [HttpPost]
         [Route("getDealer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -62,11 +84,28 @@ namespace LVRMWebAPI.Controllers
             int resultResponse = dealerRepository.AddDealer(_objDealerFields);
             if (resultResponse > 0)
             {
+                _dealerResponse.DealerId = resultResponse;
                 _dealerResponse.DealerName = _objDealerFields.DealerName;
+                _dealerResponse.PhoneNumber = _objDealerFields.PhoneNumber;
+                _dealerResponse.TimeZone = _objDealerFields.TimeZone;
+                _dealerResponse.DealerHomePageURL = _objDealerFields.DealerHomePageURL;
+                _dealerResponse.ThirdPartySite = _objDealerFields.ThirdPartySite;
+                _dealerResponse.LVSuiteID = _objDealerFields.LVSuiteID;
+                _dealerResponse.ReviewInvitationEmail = _objDealerFields.ReviewInvitationEmail;
+                _dealerResponse.RMEnabled = _objDealerFields.RMEnabled;
+                _dealerResponse.ReviewWidgetSite = _objDealerFields.ReviewWidgetSite;
+                _dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
+                _dealerResponse.ReviewWidgetContainerTag = _objDealerFields.ReviewWidgetContainerTag;
+                _dealerResponse.Industry = _objDealerFields.Industry;
+                _dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
+                _dealerResponse.FacebookEnabled = _objDealerFields.FacebookEnabled;
+                _dealerResponse.GoogleLocationID = _objDealerFields.GoogleLocationID;
+                _dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
+                _dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
                 _objResponse.Data = _dealerResponse;
                 _objResponse.Message = "Dealer Created Successfully";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.Created;
+                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else

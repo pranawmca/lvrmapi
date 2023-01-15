@@ -5,6 +5,7 @@ namespace LVRMWebAPI.Repository
 {
     public interface IDealerRepository
     {
+        DealerResponses GetDealerById(int dealerId);
         List<DealerResponses> GetDealer(DealerSearch _objDealerSearch);
         int AddDealer(DealerRequest _objDealerFields);
         int UpdateDealer(UpdateDealerRequest _objDealerFields);

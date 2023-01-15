@@ -12,6 +12,28 @@ namespace LVRMWebAPI.Repository
         public DealerRepository(PSM_DevContext _pSM_DevContext)
         {
             pSM_DevContext = _pSM_DevContext;
+        }     
+        public DealerResponses GetDealerById(int dealerId)
+        {
+            try
+            {
+                //UserResponse _objResponse = new UserResponse();
+                DealerResponses dealerdetails = new DealerResponses();
+                pSM_DevContext.LoadStoredProc("dbo.GetDealerByIdApi")
+                   .WithSqlParam("SourceDealerId", dealerId)
+                   .ExecuteStoredProc((handler) =>
+                   {
+                       dealerdetails = handler.ReadToList<DealerResponses>().FirstOrDefault();
+                       // do something with your results.
+                   });
+                return dealerdetails;
+
+            }
+            catch
+            {
+                throw;
+
+            }
         }
         public List<DealerResponses> GetDealer(DealerSearch _objDealerSearch)
         {
