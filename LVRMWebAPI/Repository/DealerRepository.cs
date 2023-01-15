@@ -83,6 +83,7 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("GoogleLocationID", _objDealerFields.GoogleLocationID)
                   .WithSqlParam("FacebookReviewURL", _objDealerFields.FacebookReviewURL)
                   .WithSqlParam("GoogleReviewURL", _objDealerFields.GoogleReviewURL)
+                  .WithSqlParam("BadgeGUID", _objDealerFields.BadgeGUID)                 
                   .ExecuteStoredProc((handler) =>
                   {
                       objResult = handler.ReadToList<ReulstDealerMsg>().FirstOrDefault();

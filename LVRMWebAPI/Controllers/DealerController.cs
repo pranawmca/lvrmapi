@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace LVRMWebAPI.Controllers
 {
@@ -38,30 +39,29 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Dealer does not exists.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = (System.Net.HttpStatusCode)409;
+                _objResponse.StatusCode = HttpStatusCode.BadRequest;
                 return BadRequest(_objResponse);
             }
         }
 
-        [HttpPost]
-        [Route("getDealer")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> getDealer(DealerSearch _objDealerSearch)
-        {
-            Response _objResponse = new Response();
-            if (_objDealerSearch == null)
-            {
-                return BadRequest("Invalid payload");
-            }
+        //[HttpPost]
+        //[Route("getDealer")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> getDealer(DealerSearch _objDealerSearch)
+        //{
+        //    Response _objResponse = new Response();
+        //    if (_objDealerSearch == null)
+        //    {
+        //        return BadRequest("Invalid payload");
+        //    }
+        //    if (!ModelState.IsValid)
+        //    {
 
-            if (!ModelState.IsValid)
-            {
-
-            }
-            var data = dealerRepository.GetDealer(_objDealerSearch);
-            return Ok(data);
-        }
+        //    }
+        //    var data = dealerRepository.GetDealer(_objDealerSearch);
+        //    return Ok(data);
+        //}
 
 
         [HttpPost]
@@ -72,6 +72,7 @@ namespace LVRMWebAPI.Controllers
         {
             Response _objResponse = new Response();
             DealerResponse _dealerResponse = new DealerResponse();
+            string guid= Guid.NewGuid().ToString();     
             if (_objDealerFields == null)
             {
                 return BadRequest("Invalid payload");
@@ -80,7 +81,7 @@ namespace LVRMWebAPI.Controllers
             {
 
             }
-
+            _objDealerFields.BadgeGUID = guid;
             int resultResponse = dealerRepository.AddDealer(_objDealerFields);
             if (resultResponse > 0)
             {
@@ -94,7 +95,7 @@ namespace LVRMWebAPI.Controllers
                 _dealerResponse.ReviewInvitationEmail = _objDealerFields.ReviewInvitationEmail;
                 _dealerResponse.RMEnabled = _objDealerFields.RMEnabled;
                 _dealerResponse.ReviewWidgetSite = _objDealerFields.ReviewWidgetSite;
-                _dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
+                //_dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
                 _dealerResponse.ReviewWidgetContainerTag = _objDealerFields.ReviewWidgetContainerTag;
                 _dealerResponse.Industry = _objDealerFields.Industry;
                 _dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
@@ -102,6 +103,7 @@ namespace LVRMWebAPI.Controllers
                 _dealerResponse.GooglePlaceID = _objDealerFields.GoogleLocationID;
                 _dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
                 _dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
+                _dealerResponse.GUID = guid;
                 _objResponse.Data = _dealerResponse;
                 _objResponse.Message = "Dealer Created Successfully";
                 _objResponse.Status = true;

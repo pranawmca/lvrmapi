@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -37,7 +39,8 @@ namespace LVRMWebAPI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int Admin { get; set; }
+        [DefaultValue(false)]
+        public bool Admin { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string Department { get; set; }
@@ -74,10 +77,9 @@ namespace LVRMWebAPI.Models
             RuleFor(x => x.FirstName).NotEmpty().WithMessage("First Name is required");
             RuleFor(x => x.LastName).NotEmpty().WithMessage("Last Name is required");
             RuleFor(x => x.DealerId).NotEmpty().WithMessage("DealerID is required");
-            RuleFor(x => x.Email).EmailAddress().WithMessage("Invalid email address");
-            RuleFor(x => x.Admin).NotEmpty().WithMessage("Admin field is required");
-            // RuleFor(x => x.PhoneNumber).Must(CheckNumber).WithMessage("Invalid phone number");
-
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Invalid email address");
+            RuleFor(x => x.Admin).NotNull().WithMessage("Admin field is required");
+            When(x => !string.IsNullOrEmpty(x.PhoneNumber), () => { RuleFor(x => x.PhoneNumber).Must(CheckNumber).WithMessage("Invalid phone number"); }) ;
         }
 
         public bool CheckNumber(string strPhoneNumber)
@@ -170,6 +172,9 @@ namespace LVRMWebAPI.Models
         public string GoogleLocationID { get; set; }
         public string FacebookReviewURL { get; set; }
         public string GoogleReviewURL { get; set; }
+        [JsonIgnore]
+        public string BadgeGUID { get; set; }
+        
     }
     public class DealerValidator : AbstractValidator<DealerRequest>
     {
@@ -203,9 +208,8 @@ namespace LVRMWebAPI.Models
     {
         public UpdateDealerValidator()
         {
-            RuleFor(x => x.SourceDealerId).NotEmpty().WithMessage("Dealer Id is required");
-            //RuleFor(x => x.DealerName).NotEmpty().WithMessage("Dealer Name is required");
-            //RuleFor(x => x.PhoneNumber).Must(CheckNumber).WithMessage("Invalid phone number");
+            RuleFor(x => x.SourceDealerId).NotEmpty().WithMessage("Dealer Id is required"); 
+            When(x => !string.IsNullOrEmpty(x.PhoneNumber), () => { RuleFor(x => x.PhoneNumber).Must(CheckNumber).WithMessage("Invalid phone number"); });           
             //RuleFor(x => x.TimeZone).NotEmpty().WithMessage("TimeZone is required");
             //RuleFor(x => x.DealerHomePageURL).NotEmpty().WithMessage("Home Page URL is required");
             //RuleFor(x => x.ThirdPartySite).NotEmpty().WithMessage("Third Party Site is required");
@@ -263,10 +267,14 @@ namespace LVRMWebAPI.Models
     public class UserReqField
     {
         public int UserID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
     }
-    public class UserDeatails : UserReqField
+    public class UserDeatails 
     {
         [Key]
+        public int UserID { get; set; }
         public int DealerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

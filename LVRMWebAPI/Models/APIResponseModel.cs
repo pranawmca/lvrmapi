@@ -45,6 +45,7 @@ namespace LVRMWebAPI.Models
         public string GooglePlaceID { get; set; }
         public string FacebookReviewURL { get; set; }
         public string GoogleReviewURL { get; set; }
+        public string GUID { get; set; }
 
     }
 

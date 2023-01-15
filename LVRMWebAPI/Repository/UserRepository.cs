@@ -43,7 +43,10 @@ namespace LVRMWebAPI.Repository
                 //UserResponse _objResponse = new UserResponse();
                 IList<UserDeatails> userlist = new List<UserDeatails>();
                 pSM_DevContext.LoadStoredProc("dbo.GetUsersFromApi")
-                   .WithSqlParam("KeyUserId", Convert.ToInt32(_objUserReq.UserID))
+                   .WithSqlParam("KeyUserId",Convert.ToInt32(_objUserReq.UserID))
+                   .WithSqlParam("FirstName", string.IsNullOrEmpty(_objUserReq.FirstName)?"":(object)_objUserReq.FirstName)
+                   .WithSqlParam("LastName", string.IsNullOrEmpty(_objUserReq.LastName) ? "" : (object)_objUserReq.LastName)
+                   .WithSqlParam("EmailID", string.IsNullOrEmpty(_objUserReq.Email) ? "" : (object)_objUserReq.Email)
                    .ExecuteStoredProc((handler) =>
                    {
                        userlist = handler.ReadToList<UserDeatails>().ToList();
@@ -70,7 +73,7 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("LastName", (object)_objUserFields.LastName ?? DBNull.Value)
                   .WithSqlParam("Email", (object)_objUserFields.Email ?? DBNull.Value)
                   .WithSqlParam("Password", Commoncls.MD5Hash(_objUserFields.Password))
-                  .WithSqlParam("Admin", _objUserFields.Admin)
+                  .WithSqlParam("Admin", _objUserFields.Admin==true?2:1)
                   .WithSqlParam("PhoneNumber", (object)_objUserFields.PhoneNumber ?? DBNull.Value)
                   .WithSqlParam("Department", (object)_objUserFields.Department ?? DBNull.Value)
                   .ExecuteStoredProc((handler) =>

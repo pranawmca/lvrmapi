@@ -45,7 +45,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "User does not exists.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = (System.Net.HttpStatusCode)409;
+                _objResponse.StatusCode =HttpStatusCode.BadRequest;
                 return BadRequest(_objResponse);
             }
         }
@@ -58,76 +58,23 @@ namespace LVRMWebAPI.Controllers
         public async Task<IActionResult> GetUsers(UserReqField _objUserUser)
         {
             Response _objResponse = new Response();
-            if (_objUserUser == null)
+            if (_objUserUser.UserID == 0 && string.IsNullOrEmpty(_objUserUser.FirstName) && string.IsNullOrEmpty(_objUserUser.LastName) && string.IsNullOrEmpty(_objUserUser.Email))
             {
                 return BadRequest("Invalid payload");
-                //return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid payload");
             }
-
-            if (!ModelState.IsValid)
+            List<UserDeatails> _objUserList = new List<UserDeatails>();
+            _objUserList = userRepository.GetUserList(_objUserUser);
+            if (_objUserList.Count > 0)
+                return Ok(_objUserList);
+            else
             {
-
-            }
-
-
-            var data = userRepository.GetUserList(_objUserUser);
-            return Ok(data);
-
-            //RepManSSOAPIDAL _objRepManSSOAPIDAL = new RepManSSOAPIDAL();
-
-            //List<UserField> userFieldsList = new List<UserField>();
-            //if (result.IsValid)
-            //{
-            //    try
-            //    {
-            //        userFieldsList = _objRepManSSOAPIDAL.GetUserList(_objUserUser);
-            //        if (userFieldsList.Count > 0)
-            //        {
-            //            _objResponse.Data = userFieldsList;
-            //            _objResponse.Message = "";
-            //            _objResponse.Status = true;
-            //            _objResponse.StatusCode = HttpStatusCode.OK;
-            //            return Request.CreateResponse(HttpStatusCode.OK, _objResponse);
-            //        }
-            //        else
-            //        {
-            //            _objResponse.Data = "";
-            //            _objResponse.Message = "Failed!Try again";
-            //            _objResponse.Status = true;
-            //            _objResponse.StatusCode = HttpStatusCode.InternalServerError;
-            //            return Request.CreateResponse(HttpStatusCode.InternalServerError, _objResponse);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        _objResponse.Data = "";
-            //        _objResponse.Message = ex.Message;
-            //        _objResponse.Status = false;
-            //        _objResponse.StatusCode = HttpStatusCode.InternalServerError;
-            //        return Request.CreateResponse(HttpStatusCode.InternalServerError, _objResponse);
-            //    }
-            //}
-            //else
-            //{
-            //    InvalidResponse objResponse = new InvalidResponse();
-            //    objResponse.Message = "Invalid payload";
-            //    objResponse.Code = "404";
-            //    List<Details> objDetails = new List<Details>();
-            //    foreach (var err in result.Errors)
-            //    {
-            //        objDetails.Add(new Details
-            //        {
-            //            AttributeName = err.PropertyName.ToString(),
-            //            Reason = err.ErrorMessage.ToString(),
-            //        });
-            //    }
-            //    objResponse.details = objDetails;
-            //    return BadRequest(objResponse);
-            //}
-            // return Ok();
+                _objResponse.Data = "";
+                _objResponse.Message = "User does not exists.";
+                _objResponse.Status = false;
+                _objResponse.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_objResponse);
+            }            
         }
-
-
         [HttpPost]
         [Route("addUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -151,14 +98,15 @@ namespace LVRMWebAPI.Controllers
             if (resultResponse > 0)
             {
                 _objAddUserResp.UserId = resultResponse.ToString();
-
+                _objAddUserResp.DealerId = _objUserFields.DealerId;
                 _objAddUserResp.FirstName = _objUserFields.FirstName;
                 _objAddUserResp.LastName = _objUserFields.LastName;
                 _objAddUserResp.UserName = _objUserFields.Email;
                 _objAddUserResp.Email = _objUserFields.Email;
-                _objAddUserResp.Admin = _objUserFields.Admin == 1 ? false : true;
+                _objAddUserResp.Password = _objUserFields.Password;
+                _objAddUserResp.Admin = _objUserFields.Admin;
                 _objAddUserResp.PhoneNumber = _objUserFields.PhoneNumber;
-                _objAddUserResp.Department = _objUserFields.Department;
+                _objAddUserResp.Department = _objUserFields.Department;        
                 _objResponse.Data = _objAddUserResp;
                 _objResponse.Message = "User Created Successfully.";
                 _objResponse.Status = true;
