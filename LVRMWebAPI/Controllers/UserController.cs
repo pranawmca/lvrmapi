@@ -146,11 +146,7 @@ namespace LVRMWebAPI.Controllers
                 int number = r.Next();
                 string pass = "psm" + number.ToString();
                 _objUserFields.Password = pass;
-            }          
-            //if (!ModelState.IsValid)
-            //{
-
-            //}
+            }    
             int resultResponse = userRepository.AddUser(_objUserFields);
             if (resultResponse > 0)
             {

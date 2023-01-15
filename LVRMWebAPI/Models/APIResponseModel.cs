@@ -42,7 +42,7 @@ namespace LVRMWebAPI.Models
         public string Industry { get; set; }
         public string FacebookURL { get; set; }
         public bool FacebookEnabled { get; set; }
-        public string GoogleLocationID { get; set; }
+        public string GooglePlaceID { get; set; }
         public string FacebookReviewURL { get; set; }
         public string GoogleReviewURL { get; set; }
 

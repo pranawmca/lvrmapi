@@ -99,7 +99,7 @@ namespace LVRMWebAPI.Controllers
                 _dealerResponse.Industry = _objDealerFields.Industry;
                 _dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
                 _dealerResponse.FacebookEnabled = _objDealerFields.FacebookEnabled;
-                _dealerResponse.GoogleLocationID = _objDealerFields.GoogleLocationID;
+                _dealerResponse.GooglePlaceID = _objDealerFields.GoogleLocationID;
                 _dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
                 _dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
                 _objResponse.Data = _dealerResponse;
