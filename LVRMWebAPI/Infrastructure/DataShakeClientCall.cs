@@ -4,14 +4,25 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net.Http;
+using System.Security.Policy;
 
 namespace LVRMWebAPI.Infrastructure
 {
     public static class DataShakeClientCall
     {
-        public static object GetDataShakeAPIPlaceidResponse(string PlaceId, string datashakeapiKey)
+        public static object GetDataShakeAPIPlaceidResponse(string PlaceIdorUrl, string datashakeapiKey)
         {
-            var client = new RestClient("https://app.datashake.com/api/v2/profiles/add?place_id=" + PlaceId + "");
+            //change Place_id to url in case of Facebook
+            string placeId = string.Empty;
+            if (PlaceIdorUrl.Contains("www.facebook.com"))
+            {
+                placeId = "url";
+            }
+            else
+            {
+                placeId = "place_id";
+            }
+            var client = new RestClient("https://app.datashake.com/api/v2/profiles/add?" + placeId + "=" + PlaceIdorUrl + "");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AddHeader("spiderman-token", datashakeapiKey);

@@ -38,7 +38,7 @@ namespace LVRMWebAPI.Repository
             }
         }
 
-        public int AddDatashakeReview(Review _objDatashakeReview, string dealerid)
+        public int AddDatashakeReview(Review _objDatashakeReview,  string source_name, double average_rating, string dealerid)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("PlaceID", "")//string
                   .WithSqlParam("JobID", "0")  //int
                   .WithSqlParam("ReviewCount", "0")//int
-                  .WithSqlParam("Source", "google")// all string below
+                  .WithSqlParam("Source", source_name)// all string below
                   .WithSqlParam("ReviewID", _objDatashakeReview.id)
                   .WithSqlParam("FirstName", _objDatashakeReview.name)
                   .WithSqlParam("LastName", "")

@@ -47,13 +47,10 @@ namespace LVRMWebAPI.ScronJob
                     {
                         try
                         {
-
-
-                         
                             string jobid = string.Empty;
                             if (string.IsNullOrWhiteSpace(objPlaceIDJobDetail[i].JobID))
                             {
-                                //Data shake API with placeid only.
+                                //Data shake API with placeid/fb url only.
                                 int R2 = ObjreviewRepository.UpdateDatashakeLog("Calling Datashake api with to get jobID. Placeid : " + objPlaceIDJobDetail[i].PlaceID+ " and Dealer ID :" + objPlaceIDJobDetail[i].DealerID +"");
                                 object objPlaceIdResponse = DataShakeClientCall.GetDataShakeAPIPlaceidResponse(objPlaceIDJobDetail[i].PlaceID, "0ded0923c6537d61c5d8b0dd03877b0e46b8ac73");
                                 // object objPlaceIdResponse = "{\"success\":true,\"job_id\":453375210,\"status\":200,\"message\":\"Added this profile to the queue...\"}";
@@ -103,7 +100,7 @@ namespace LVRMWebAPI.ScronJob
                                                 {
                                                     _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
                                                     var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
-                                                    scopedService.RunSchedular(itemId, objPlaceIDJobDetail[i].DealerID);
+                                                    scopedService.RunSchedular(itemId, source_name, average_rating,objPlaceIDJobDetail[i].DealerID);
                                                 }
                                             });
 
@@ -146,7 +143,7 @@ namespace LVRMWebAPI.ScronJob
 
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken);
                 Console.WriteLine("Background services started");
             }
 
