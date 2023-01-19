@@ -100,7 +100,8 @@ namespace LVRMWebAPI.ScronJob
                                                 {
                                                     _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
                                                     var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
-                                                    scopedService.RunSchedular(itemId, source_name, average_rating,objPlaceIDJobDetail[i].DealerID);
+                                                    
+                                                    scopedService.RunSchedular(itemId, source_name, Convert.ToDouble(average_rating),objPlaceIDJobDetail[i].DealerID);
                                                 }
                                             });
 
@@ -143,7 +144,7 @@ namespace LVRMWebAPI.ScronJob
 
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(2), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(60), stoppingToken);
                 Console.WriteLine("Background services started");
             }
 
