@@ -38,7 +38,7 @@ namespace LVRMWebAPI.Repository
             }
         }
 
-        public int AddDatashakeReview(Review _objDatashakeReview,  string source_name, double average_rating, string dealerid)
+        public int AddDatashakeReview(Review _objDatashakeReview,  string source_name, double average_rating, string dealerid, string placeidvalue)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace LVRMWebAPI.Repository
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.USP_DatashakeReviewSchedular")
                   .WithSqlParam("DealerID", dealerid)//string
-                  .WithSqlParam("PlaceID", "")//string
+                  .WithSqlParam("PlaceID", placeidvalue)//string
                   .WithSqlParam("JobID", "0")  //int
                   .WithSqlParam("ReviewCount", "0")//int
                   .WithSqlParam("Source", source_name)// all string below

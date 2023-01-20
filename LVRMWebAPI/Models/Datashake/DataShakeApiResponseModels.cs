@@ -38,7 +38,7 @@ namespace LVRMWebAPI.Models.Datashake
         public double? average_rating { get; set; }
         public string last_crawl { get; set; }
         public string crawl_status { get; set; }
-        public int? percentage_complete { get; set; }
+        public decimal? percentage_complete { get; set; }
         public int? result_count { get; set; }
         public int? credits_used { get; set; }
         public object from_date { get; set; }

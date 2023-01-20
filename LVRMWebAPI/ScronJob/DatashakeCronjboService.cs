@@ -101,7 +101,7 @@ namespace LVRMWebAPI.ScronJob
                                                     _logger.LogInformation("From Datasahake service start execution {datetime}", DateTime.Now);
                                                     var scopedService = scope.ServiceProvider.GetRequiredService<IScopedSevices>();
                                                     
-                                                    scopedService.RunSchedular(itemId, source_name, Convert.ToDouble(average_rating),objPlaceIDJobDetail[i].DealerID);
+                                                    scopedService.RunSchedular(itemId, source_name, Convert.ToDouble(average_rating),objPlaceIDJobDetail[i].DealerID, objPlaceIDJobDetail[i].PlaceID);
                                                 }
                                             });
 

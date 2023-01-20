@@ -25,10 +25,10 @@ namespace LVRMWebAPI.ScronJob
             _logger.LogInformation("MyScopedservice is {id}", id);
         }
 
-        public void RunSchedular(Review _objDatashakeReviewField, string source_name, double average_rating, string dealerid)
+        public void RunSchedular(Review _objDatashakeReviewField, string source_name, double average_rating, string dealerid, string placeidvalue)
         {
             //Process to add Datashake reviews in DB
-            var result = datashakeRepository.AddDatashakeReview(_objDatashakeReviewField, source_name,  average_rating, dealerid);
+            var result = datashakeRepository.AddDatashakeReview(_objDatashakeReviewField, source_name,  average_rating, dealerid, placeidvalue);
 
         }
 
@@ -37,7 +37,7 @@ namespace LVRMWebAPI.ScronJob
     public interface IScopedSevices
     {
         void Write();
-        void RunSchedular(Review _objDatashakeReviewField, string source_name, double average_rating, string dealerid);
+        void RunSchedular(Review _objDatashakeReviewField, string source_name, double average_rating, string dealerid, string placeidvalue);
 
 
     }
