@@ -1,5 +1,6 @@
 
 using FluentValidation.AspNetCore;
+using LVRMWebAPI.CommonCronjob;
 using LVRMWebAPI.Data;
 using LVRMWebAPI.Infrastructure;
 using LVRMWebAPI.Models;
@@ -55,8 +56,9 @@ namespace LVRMWebAPI
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
             services.AddScoped<IDatashakeRepository, DatashakeRepository>();
             services.AddScoped<IScopedSevices, MyScopServices>();
-           // services.AddTransient<IReviewRepository, ReviewRepository>();
+            // services.AddTransient<IReviewRepository, ReviewRepository>();
             //services.AddHostedService<DatashakeCronjboService>();
+            services.AddScoped<ICronJobManualTriggerCLS, CronJobManualTriggerCLS>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
             {
