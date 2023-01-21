@@ -59,6 +59,8 @@ namespace LVRMWebAPI
             // services.AddTransient<IReviewRepository, ReviewRepository>();
             //services.AddHostedService<DatashakeCronjboService>();
             services.AddScoped<ICronJobManualTriggerCLS, CronJobManualTriggerCLS>();
+            services.AddScoped<IDatashakeRepositoryMannual, DatashakeRepositoryMannual>();
+            services.AddScoped<IMyScopServicesMannual, MyScopServicesMannual>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
             {

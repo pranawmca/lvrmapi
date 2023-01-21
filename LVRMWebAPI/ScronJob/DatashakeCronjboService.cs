@@ -147,7 +147,7 @@ namespace LVRMWebAPI.ScronJob
 
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     #region update jobid
                     ReviewRepository ObjreviewRepositoryEx = new ReviewRepository();
