@@ -155,7 +155,7 @@ namespace LVRMWebAPI.ScronJob
                     #endregion
 
                 }
-                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken);
                 Console.WriteLine("Background services started " + DateTime.Now);
             }
 
