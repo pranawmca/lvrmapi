@@ -68,7 +68,7 @@ namespace LVRMWebAPI
                 {
                     Version = "v1",
                     Title = "Open API Swagger",
-                    Description = "Use api for repman",
+                    Description = "Use api for repman dealer",
                 });
                 c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
