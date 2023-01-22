@@ -25,7 +25,7 @@ namespace LVRMWebAPI.Repository
                 PSM_DevContext _pSM_DevContext = new PSM_DevContext();
                 //UserResponse _objResponse = new UserResponse();
                 IList<PlaceIDJobDetail> placeIDList = new List<PlaceIDJobDetail>();
-                _pSM_DevContext.LoadStoredProc("GET_PlaceID_DealerIDTest")
+                _pSM_DevContext.LoadStoredProc("GET_PlaceID_DealerID")
                    .WithSqlParam("DealerID", DealerID)
                    .WithSqlParam("PlaceID", PlaceID)
                    .ExecuteStoredProc((handler) =>

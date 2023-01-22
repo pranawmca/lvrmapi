@@ -39,7 +39,7 @@ namespace LVRMWebAPI
         {
             services.AddDbContext<PSM_DevContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:DBConnectionPSM"]));
 
-         //   services.AddDbContext<PSM_DevContext>(options =>
+         //services.AddDbContext<PSM_DevContext>(options =>
          //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
          //ServiceLifetime.Transient);
 

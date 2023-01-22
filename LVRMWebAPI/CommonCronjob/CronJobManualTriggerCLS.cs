@@ -60,12 +60,12 @@ namespace LVRMWebAPI.CommonCronjob
                                 jobid = objPlaceIDJobDetail[i].JobID;
                             }
                             #region update job id and isrun to database here
-                            //DatashakeJobIDDetails _objUpdateJobID = new DatashakeJobIDDetails();
-                            //_objUpdateJobID.DealerId = objPlaceIDJobDetail[i].DealerID;
-                            //_objUpdateJobID.PlaceID = objPlaceIDJobDetail[i].PlaceID;
-                            //_objUpdateJobID.JobID = jobid;
-                            //_objUpdateJobID.Status = "Running";
-                            //int updateJobIDResult = ObjreviewRepository.UpdateJobIDByPlaceID(_objUpdateJobID);
+                            DatashakeJobIDDetails _objUpdateJobID = new DatashakeJobIDDetails();
+                            _objUpdateJobID.DealerId = objPlaceIDJobDetail[i].DealerID;
+                            _objUpdateJobID.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                            _objUpdateJobID.JobID = jobid;
+                            _objUpdateJobID.Status = "Running";
+                            int updateJobIDResult = ObjreviewRepository.UpdateJobIDByPlaceID(_objUpdateJobID);
                             #endregion
                             int totalCount = 0;
                             //get review from datashake api
@@ -105,12 +105,12 @@ namespace LVRMWebAPI.CommonCronjob
                             int R3 = ObjreviewRepository.UpdateDatashakeLog("Mannually Triggered: Data completed For Placeid : " + objPlaceIDJobDetail[i].PlaceID);
 
                             #region update jobid
-                            //DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
-                            //_objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
-                            //_objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
-                            //_objJobDetails.JobID = jobid;
-                            //_objJobDetails.ReviewCount = totalCount.ToString();
-                            //int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
+                            DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
+                            _objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
+                            _objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                            _objJobDetails.JobID = jobid;
+                            _objJobDetails.ReviewCount = totalCount.ToString();
+                            int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
                             #endregion
 
                             int R4 = ObjreviewRepository.UpdateDatashakeLog("Mannually Triggered: Placeid and JOb ID updated  For DealerID : " + objPlaceIDJobDetail[i].DealerID);
@@ -119,12 +119,12 @@ namespace LVRMWebAPI.CommonCronjob
                         catch (Exception ex)
                         {
                             #region update jobid
-                            //DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
-                            //_objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
-                            //_objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
-                            //_objJobDetails.JobID = string.Empty;
-                            //_objJobDetails.ReviewCount = "0";
-                            //int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
+                            DatashakeJobIDDetails _objJobDetails = new DatashakeJobIDDetails();
+                            _objJobDetails.DealerId = objPlaceIDJobDetail[i].DealerID;
+                            _objJobDetails.PlaceID = objPlaceIDJobDetail[i].PlaceID;
+                            _objJobDetails.JobID = string.Empty;
+                            _objJobDetails.ReviewCount = "0";
+                            int result = ObjreviewRepository.UpdateDatashakeJobID(_objJobDetails);
                             #endregion
 
                             int R4 = ObjreviewRepository.UpdateDatashakeLog("Mannually Triggered: Exceptions For DealerID : " + objPlaceIDJobDetail[i].DealerID + " " + ex.Message);
