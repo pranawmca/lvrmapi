@@ -73,7 +73,7 @@ namespace LVRMWebAPI.Controllers
             Response _objResponse = new Response();
             // DealerResponse _dealerResponse = new DealerResponse();
             DealerResponses _dealerResponse = new DealerResponses();
-            string guid= Guid.NewGuid().ToString();     
+              
             if (_objDealerFields == null)
             {
                 return BadRequest("Invalid payload");
@@ -82,7 +82,7 @@ namespace LVRMWebAPI.Controllers
             {
 
             }
-            _objDealerFields.BadgeGUID = guid;
+            //_objDealerFields.BadgeGUID = guid;
             _dealerResponse = dealerRepository.AddDealer(_objDealerFields);
             if (_dealerResponse.SourceDealerId > 0)
             {

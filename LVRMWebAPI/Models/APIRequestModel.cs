@@ -172,8 +172,8 @@ namespace LVRMWebAPI.Models
         public string GoogleLocationID { get; set; }
         public string FacebookReviewURL { get; set; }
         public string GoogleReviewURL { get; set; }
-        [JsonIgnore]
-        public string BadgeGUID { get; set; }
+       // [JsonIgnore]
+       // public string BadgeGUID { get; set; }
         
     }
     public class DealerValidator : AbstractValidator<DealerRequest>
