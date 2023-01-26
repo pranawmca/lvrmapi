@@ -23,6 +23,7 @@ namespace LVRMWebAPI.Controllers
 
         [HttpPost]
         [Route("addplaceiddetails")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> addplaceiddetails([FromBody] PlaceIdDetailsRequest placeIdDetails)
@@ -103,6 +104,7 @@ namespace LVRMWebAPI.Controllers
         }
         [HttpPost]
         [Route("callscronjob")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CallCronJob()
