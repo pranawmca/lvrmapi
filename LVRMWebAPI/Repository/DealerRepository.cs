@@ -57,12 +57,15 @@ namespace LVRMWebAPI.Repository
 
             }
         }
-        public int AddDealer(DealerRequest _objDealerFields)
+        //  public int AddDealer(DealerRequest _objDealerFields)
+        public DealerResponses AddDealer(DealerRequest _objDealerFields)
         {
             try
             {
+                //IList<DealerResponses> dealerlist = new List<DealerResponses>();
+                DealerResponses dealerDetails = new DealerResponses();
                 int result = 0;
-                ReulstDealerMsg objResult = new ReulstDealerMsg();
+               // ReulstDealerMsg objResult = new ReulstDealerMsg();
                 pSM_DevContext.LoadStoredProc("dbo.AddDealersFromApi")
                   .WithSqlParam("SourceDealerId", Convert.ToInt32(_objDealerFields.SourceDealerId))
                   .WithSqlParam("DealerName", _objDealerFields.DealerName)
@@ -75,7 +78,8 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("RMEnabled", _objDealerFields.RMEnabled)
                   .WithSqlParam("ReviewWidgetSite", _objDealerFields.ReviewWidgetSite)
                   .WithSqlParam("reviewProfile", DBNull.Value)
-                  .WithSqlParam("TrackingScript", _objDealerFields.TrackingScript)
+                  //.WithSqlParam("TrackingScript", _objDealerFields.TrackingScript) //need to discuss about
+                  .WithSqlParam("TrackingScript", DBNull.Value)
                   .WithSqlParam("ReviewWidgetContainerTag", _objDealerFields.ReviewWidgetContainerTag)
                   .WithSqlParam("Industry", String.IsNullOrEmpty(_objDealerFields.Industry) ? 0 : (object)_objDealerFields.Industry)
                   .WithSqlParam("FacebookURL", _objDealerFields.FacebookURL)
@@ -86,12 +90,15 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("BadgeGUID", _objDealerFields.BadgeGUID)                 
                   .ExecuteStoredProc((handler) =>
                   {
-                      objResult = handler.ReadToList<ReulstDealerMsg>().FirstOrDefault();
+                      // objResult = handler.ReadToList<ReulstDealerMsg>().FirstOrDefault();
                       // do something with your results.
+
+                      dealerDetails = handler.ReadToList<DealerResponses>().FirstOrDefault();
                   });
 
-                result = Convert.ToInt32(objResult.Message);
-                return result;
+                //result = Convert.ToInt32(objResult.Message);
+                //return result;
+                return dealerDetails;
             }
             catch
             {

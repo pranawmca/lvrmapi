@@ -51,30 +51,31 @@ namespace LVRMWebAPI.Controllers
         }
 
 
-        [HttpPost]
-        [Route("getUser")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetUsers(UserReqField _objUserUser)
-        {
-            Response _objResponse = new Response();
-            if (_objUserUser.UserID == 0 && string.IsNullOrEmpty(_objUserUser.FirstName) && string.IsNullOrEmpty(_objUserUser.LastName) && string.IsNullOrEmpty(_objUserUser.Email))
-            {
-                return BadRequest("Invalid payload");
-            }
-            List<UserDeatails> _objUserList = new List<UserDeatails>();
-            _objUserList = userRepository.GetUserList(_objUserUser);
-            if (_objUserList.Count > 0)
-                return Ok(_objUserList);
-            else
-            {
-                _objResponse.Data = "";
-                _objResponse.Message = "User does not exists.";
-                _objResponse.Status = false;
-                _objResponse.StatusCode = HttpStatusCode.BadRequest;
-                return BadRequest(_objResponse);
-            }            
-        }
+        //[HttpPost]
+        //[Route("getUser")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> GetUsers(UserReqField _objUserUser)
+        //{
+        //    Response _objResponse = new Response();
+        //    if (_objUserUser.UserID == 0 && string.IsNullOrEmpty(_objUserUser.FirstName) && string.IsNullOrEmpty(_objUserUser.LastName) && string.IsNullOrEmpty(_objUserUser.Email))
+        //    {
+        //        return BadRequest("Invalid payload");
+        //    }
+        //    List<UserDeatails> _objUserList = new List<UserDeatails>();
+        //    _objUserList = userRepository.GetUserList(_objUserUser);
+        //    if (_objUserList.Count > 0)
+        //        return Ok(_objUserList);
+        //    else
+        //    {
+        //        _objResponse.Data = "";
+        //        _objResponse.Message = "User does not exists.";
+        //        _objResponse.Status = false;
+        //        _objResponse.StatusCode = HttpStatusCode.BadRequest;
+        //        return BadRequest(_objResponse);
+        //    }            
+        //}
+
         [HttpPost]
         [Route("addUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -83,6 +84,8 @@ namespace LVRMWebAPI.Controllers
         {
             Response _objResponse = new Response();
             UserResponse _objAddUserResp = new UserResponse();
+
+            UserDeatails _objUserResponse = new UserDeatails();
             if (_objUserFields == null)
             {
                 return BadRequest("Invalid payload");
@@ -97,17 +100,22 @@ namespace LVRMWebAPI.Controllers
             int resultResponse = userRepository.AddUser(_objUserFields);
             if (resultResponse > 0)
             {
-                _objAddUserResp.UserId = resultResponse.ToString();
-                _objAddUserResp.DealerId = _objUserFields.DealerId;
-                _objAddUserResp.FirstName = _objUserFields.FirstName;
-                _objAddUserResp.LastName = _objUserFields.LastName;
-                _objAddUserResp.UserName = _objUserFields.Email;
-                _objAddUserResp.Email = _objUserFields.Email;
-                _objAddUserResp.Password = _objUserFields.Password;
-                _objAddUserResp.Admin = _objUserFields.Admin;
-                _objAddUserResp.PhoneNumber = _objUserFields.PhoneNumber;
-                _objAddUserResp.Department = _objUserFields.Department;        
-                _objResponse.Data = _objAddUserResp;
+                //_objAddUserResp.UserId = resultResponse.ToString();
+                //_objAddUserResp.DealerId = _objUserFields.DealerId;
+                //_objAddUserResp.FirstName = _objUserFields.FirstName;
+                //_objAddUserResp.LastName = _objUserFields.LastName;
+                //_objAddUserResp.UserName = _objUserFields.Email;
+                //_objAddUserResp.Email = _objUserFields.Email;
+                //_objAddUserResp.Password = _objUserFields.Password;
+                //_objAddUserResp.Admin = _objUserFields.Admin;
+                //_objAddUserResp.PhoneNumber = _objUserFields.PhoneNumber;
+                //_objAddUserResp.Department = _objUserFields.Department;    
+
+
+               
+                _objUserResponse = userRepository.GetUserDetail(resultResponse);
+                _objUserResponse.Password = _objUserFields.Password;
+                _objResponse.Data = _objUserResponse;
                 _objResponse.Message = "User Created Successfully.";
                 _objResponse.Status = true;
                 _objResponse.StatusCode = System.Net.HttpStatusCode.OK;

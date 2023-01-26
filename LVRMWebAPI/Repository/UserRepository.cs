@@ -65,6 +65,9 @@ namespace LVRMWebAPI.Repository
         {
             try
             {
+                //Add actual Password for return
+                string _password = _objUserFields.Password;
+
                 int result = 0;
                 ReulstMsg objResult = new ReulstMsg();
                 pSM_DevContext.LoadStoredProc("dbo.AddUserFromApi")

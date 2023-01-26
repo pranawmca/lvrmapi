@@ -75,7 +75,7 @@ namespace LVRMWebAPI.Models
         public UserValidator()
         {
             RuleFor(x => x.FirstName).NotEmpty().WithMessage("First Name is required");
-            RuleFor(x => x.LastName).NotEmpty().WithMessage("Last Name is required");
+            //RuleFor(x => x.LastName).NotEmpty().WithMessage("Last Name is required");
             RuleFor(x => x.DealerId).NotEmpty().WithMessage("DealerID is required");
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Invalid email address");
             RuleFor(x => x.Admin).NotNull().WithMessage("Admin field is required");
@@ -280,6 +280,43 @@ namespace LVRMWebAPI.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        //public string Active { get; set; }// no need
+        public string DateLastLoggedIn { get; set; }
+        public string Notes { get; set; }
+        public string Department { get; set; }
+        public string Photo { get; set; }
+        public string JobTitle { get; set; }
+        public string Photo_Thumb { get; set; }
+        public Boolean RRStatus { get; set; }
+        public string Password { get; set; }
+        public string VendAstaToken { get; set; }
+        public string LMSUserName { get; set; }
+        public int UserLevel { get; set; }
+
+        //public string Deleted { get; set; }//no need
+        public Boolean ShowOnReviewSite { get; set; }
+        public int SortOrder { get; set; }
+        public Boolean APIAccess { get; set; }
+        public string APIAccessCode { get; set; }
+        public int FirestormUserId { get; set; }
+        //public string FirestormAccessToken { get; set; }//no need
+        //public string FirestormAccessTokenExpireDate { get; set; }//no need
+        public Boolean CanAccessMobileApp { get; set; }
+        public Boolean CanRespondToReviews { get; set; }
+        public Boolean CanRespondToFeedbacks { get; set; }
+        public Boolean ResetPassword { get; set; }
+        public Boolean HasAccessToFirestormWebsites { get; set; }
+        public Boolean CanEditFacebookMessage { get; set; }
+        public Boolean ShowOnWebsite { get; set; }
+        public string LotVantageEmployeeToken { get; set; }
+        public string TwilioPhoneNumber { get; set; }
+        public string CCUserLevel { get; set; }
+        public Boolean ShowLastNameOnWebsite { get; set; }
+        public int DealerCurrentlyLookingAt { get; set; }
+        //public string NewTextReminderNotificationDelay { get; set; }//no need
+        public Boolean ShowOnCreditApp { get; set; }
+        public string Signature { get; set; }
+        public string HoverPhoto { get; set; }
     }
 
 

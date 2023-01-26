@@ -71,7 +71,8 @@ namespace LVRMWebAPI.Controllers
         public async Task<IActionResult> addDealer(DealerRequest _objDealerFields)
         {
             Response _objResponse = new Response();
-            DealerResponse _dealerResponse = new DealerResponse();
+            // DealerResponse _dealerResponse = new DealerResponse();
+            DealerResponses _dealerResponse = new DealerResponses();
             string guid= Guid.NewGuid().ToString();     
             if (_objDealerFields == null)
             {
@@ -82,32 +83,32 @@ namespace LVRMWebAPI.Controllers
 
             }
             _objDealerFields.BadgeGUID = guid;
-            int resultResponse = dealerRepository.AddDealer(_objDealerFields);
-            if (resultResponse > 0)
+            _dealerResponse = dealerRepository.AddDealer(_objDealerFields);
+            if (_dealerResponse.SourceDealerId > 0)
             {
-                _dealerResponse.DealerId = resultResponse;
-                _dealerResponse.DealerName = _objDealerFields.DealerName;
-                _dealerResponse.PhoneNumber = _objDealerFields.PhoneNumber;
-                _dealerResponse.TimeZone = _objDealerFields.TimeZone;
-                _dealerResponse.DealerHomePageURL = _objDealerFields.DealerHomePageURL;
-                _dealerResponse.ThirdPartySite = _objDealerFields.ThirdPartySite;
-                _dealerResponse.LVSuiteID = _objDealerFields.LVSuiteID;
-                _dealerResponse.ReviewInvitationEmail = _objDealerFields.ReviewInvitationEmail;
-                _dealerResponse.RMEnabled = _objDealerFields.RMEnabled;
-                _dealerResponse.ReviewWidgetSite = _objDealerFields.ReviewWidgetSite;
-                //_dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
-                _dealerResponse.ReviewWidgetContainerTag = _objDealerFields.ReviewWidgetContainerTag;
-                _dealerResponse.Industry = _objDealerFields.Industry;
-                _dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
-                _dealerResponse.FacebookEnabled = _objDealerFields.FacebookEnabled;
-                _dealerResponse.GooglePlaceID = _objDealerFields.GoogleLocationID;
-                _dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
-                _dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
-                _dealerResponse.GUID = guid;
+                //_dealerResponse.DealerId = resultResponse;
+                //_dealerResponse.DealerName = _objDealerFields.DealerName;
+                //_dealerResponse.PhoneNumber = _objDealerFields.PhoneNumber;
+                //_dealerResponse.TimeZone = _objDealerFields.TimeZone;
+                //_dealerResponse.DealerHomePageURL = _objDealerFields.DealerHomePageURL;
+                //_dealerResponse.ThirdPartySite = _objDealerFields.ThirdPartySite;
+                //_dealerResponse.LVSuiteID = _objDealerFields.LVSuiteID;
+                //_dealerResponse.ReviewInvitationEmail = _objDealerFields.ReviewInvitationEmail;
+                //_dealerResponse.RMEnabled = _objDealerFields.RMEnabled;
+                //_dealerResponse.ReviewWidgetSite = _objDealerFields.ReviewWidgetSite;
+                ////_dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
+                //_dealerResponse.ReviewWidgetContainerTag = _objDealerFields.ReviewWidgetContainerTag;
+                //_dealerResponse.Industry = _objDealerFields.Industry;
+                //_dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
+                //_dealerResponse.FacebookEnabled = _objDealerFields.FacebookEnabled;
+                //_dealerResponse.GooglePlaceID = _objDealerFields.GoogleLocationID;
+                //_dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
+                //_dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
+                //_dealerResponse.GUID = guid;
                 _objResponse.Data = _dealerResponse;
                 _objResponse.Message = "Dealer Created Successfully";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+               _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else
@@ -118,6 +119,41 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
             }
+            //if (resultResponse > 0)
+            //{
+            //    _dealerResponse.DealerId = resultResponse;
+            //    _dealerResponse.DealerName = _objDealerFields.DealerName;
+            //    _dealerResponse.PhoneNumber = _objDealerFields.PhoneNumber;
+            //    _dealerResponse.TimeZone = _objDealerFields.TimeZone;
+            //    _dealerResponse.DealerHomePageURL = _objDealerFields.DealerHomePageURL;
+            //    _dealerResponse.ThirdPartySite = _objDealerFields.ThirdPartySite;
+            //    _dealerResponse.LVSuiteID = _objDealerFields.LVSuiteID;
+            //    _dealerResponse.ReviewInvitationEmail = _objDealerFields.ReviewInvitationEmail;
+            //    _dealerResponse.RMEnabled = _objDealerFields.RMEnabled;
+            //    _dealerResponse.ReviewWidgetSite = _objDealerFields.ReviewWidgetSite;
+            //    //_dealerResponse.TrackingScript = _objDealerFields.TrackingScript;
+            //    _dealerResponse.ReviewWidgetContainerTag = _objDealerFields.ReviewWidgetContainerTag;
+            //    _dealerResponse.Industry = _objDealerFields.Industry;
+            //    _dealerResponse.FacebookURL = _objDealerFields.FacebookURL;
+            //    _dealerResponse.FacebookEnabled = _objDealerFields.FacebookEnabled;
+            //    _dealerResponse.GooglePlaceID = _objDealerFields.GoogleLocationID;
+            //    _dealerResponse.FacebookReviewURL = _objDealerFields.FacebookReviewURL;
+            //    _dealerResponse.GoogleReviewURL = _objDealerFields.GoogleReviewURL;
+            //    _dealerResponse.GUID = guid;
+            //    _objResponse.Data = _dealerResponse;
+            //    _objResponse.Message = "Dealer Created Successfully";
+            //    _objResponse.Status = true;
+            //    _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+            //    return Ok(_objResponse);
+            //}
+            //else
+            //{
+            //    _objResponse.Data = "";
+            //    _objResponse.Message = "Failed! Please try later.";
+            //    _objResponse.Status = false;
+            //    _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+            //    return BadRequest(_objResponse);
+            //}
         }
 
         [HttpPut]
@@ -182,6 +218,14 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Status = true;
                 _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
+            }
+            else if (resultResponse == -2005)
+            {
+                _objResponse.Data = "";
+                _objResponse.Message = "Dealer does not exist";
+                _objResponse.Status = false;
+                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                return BadRequest(_objResponse);
             }
             else
             {
