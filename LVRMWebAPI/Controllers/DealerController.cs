@@ -25,7 +25,7 @@ namespace LVRMWebAPI.Controllers
 
         [HttpGet]
         [Route("getDealer/{dealerID}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DealerResponses), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> getDealerByID(int dealerID)
         {
@@ -39,7 +39,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Dealer does not exists.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = HttpStatusCode.BadRequest;
+                //_objResponse.StatusCode = HttpStatusCode.BadRequest;
                 return BadRequest(_objResponse);
             }
         }
@@ -66,7 +66,7 @@ namespace LVRMWebAPI.Controllers
 
         [HttpPost]
         [Route("addDealer")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> addDealer(DealerRequest _objDealerFields)
         {
@@ -108,7 +108,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = _dealerResponse;
                 _objResponse.Message = "Dealer Created Successfully";
                 _objResponse.Status = true;
-               _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+              // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else
@@ -116,7 +116,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Failed! Please try later.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
             }
             //if (resultResponse > 0)
@@ -158,7 +158,7 @@ namespace LVRMWebAPI.Controllers
 
         [HttpPut]
         [Route("updateDealer")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> updateDealer(UpdateDealerRequest _objUpdateDealerFields)
         {
@@ -179,7 +179,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = _objUpdateDealerResponse;
                 _objResponse.Message = "Dealer Updated Successfully";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else
@@ -187,14 +187,14 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Failed! Please try later.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
 
             }
         }
         [HttpDelete]
         [Route("deleteDealer")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> deleteDealer(DeleteDealerRequest _objDeleteDealerRequest)
         {
@@ -216,7 +216,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = _objDeleteUserResponse;
                 _objResponse.Message = "Dealer Deleted Successfully.";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             else if (resultResponse == -2005)
@@ -224,7 +224,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Dealer does not exist";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return BadRequest(_objResponse);
             }
             else
@@ -232,7 +232,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Failed! Please try later.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+               // _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
 
             }

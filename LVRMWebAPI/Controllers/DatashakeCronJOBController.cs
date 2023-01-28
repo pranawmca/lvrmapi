@@ -62,7 +62,7 @@ namespace LVRMWebAPI.Controllers
                     _objResponse.Data = lstMatched;
                     _objResponse.Message = "Save successfully! and these records already exist";
                     _objResponse.Status = true;
-                    _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                   // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                    // return BadRequest(_objResponse);
 
                 }
@@ -72,7 +72,7 @@ namespace LVRMWebAPI.Controllers
                     _objResponse.Data = lstMatched;
                     _objResponse.Message = "All data is exist in our records";
                     _objResponse.Status = true;
-                    _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                   // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                     // return BadRequest(_objResponse);
 
                 }
@@ -82,7 +82,7 @@ namespace LVRMWebAPI.Controllers
                     _objResponse.Data = "";
                     _objResponse.Message = "Data save successfully";
                     _objResponse.Status = true;
-                    _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                   // _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                     return BadRequest(_objResponse);
                 }
 
@@ -94,7 +94,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Failed! Please try later.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                //_objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
 
             }
@@ -117,7 +117,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Scron job called successfully";
                 _objResponse.Status = true;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                //_objResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 return Ok(_objResponse);
             }
             catch (Exception ex)
@@ -125,7 +125,7 @@ namespace LVRMWebAPI.Controllers
                 _objResponse.Data = "";
                 _objResponse.Message = "Failed! Please try later.";
                 _objResponse.Status = false;
-                _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+              //  _objResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return BadRequest(_objResponse);
 
             }

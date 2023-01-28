@@ -62,6 +62,7 @@ namespace LVRMWebAPI.Repository
         {
             try
             {
+                string guid = Guid.NewGuid().ToString();
                 //IList<DealerResponses> dealerlist = new List<DealerResponses>();
                 DealerResponses dealerDetails = new DealerResponses();
                 int result = 0;
@@ -87,7 +88,8 @@ namespace LVRMWebAPI.Repository
                   .WithSqlParam("GoogleLocationID", _objDealerFields.GoogleLocationID)
                   .WithSqlParam("FacebookReviewURL", _objDealerFields.FacebookReviewURL)
                   .WithSqlParam("GoogleReviewURL", _objDealerFields.GoogleReviewURL)
-                  .WithSqlParam("BadgeGUID", _objDealerFields.BadgeGUID)                 
+                  // .WithSqlParam("BadgeGUID", _objDealerFields.BadgeGUID)
+                    .WithSqlParam("BadgeGUID", guid) 
                   .ExecuteStoredProc((handler) =>
                   {
                       // objResult = handler.ReadToList<ReulstDealerMsg>().FirstOrDefault();
