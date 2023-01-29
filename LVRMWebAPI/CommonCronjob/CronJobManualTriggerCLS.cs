@@ -225,7 +225,7 @@ namespace LVRMWebAPI.CommonCronjob
             {
                 PSM_DevContext _pSM_DevContext = new PSM_DevContext();
                 ReulstMsg objResult = new ReulstMsg();
-                _pSM_DevContext.LoadStoredProc("dbo.USP_CreateDealerFromFile")
+                _pSM_DevContext.LoadStoredProc("dbo.USP_InsertUpdateDealerFromDumpData")
                   .ExecuteStoredProc((handler) =>
                   {
                       objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
