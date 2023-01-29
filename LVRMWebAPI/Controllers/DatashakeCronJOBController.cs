@@ -136,7 +136,7 @@ namespace LVRMWebAPI.Controllers
 
         [HttpPost]
         [Route("mergeDealer")]
-        [ApiExplorerSettings(IgnoreApi = true)]
+        //[ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> MergeDealer()
