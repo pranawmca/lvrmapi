@@ -11,5 +11,6 @@ namespace LVRMWebAPI.CommonCronjob
         void CallCronJobManually();
         List<PlaceIdDetailsModel> GetPlaceIDDetails();
         void SaveDealerIDPlaceID(List<PlaceIdDetailsModel> lstModel);
+        void MergeDealer();
     }
 }

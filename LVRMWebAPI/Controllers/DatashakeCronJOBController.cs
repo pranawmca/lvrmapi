@@ -133,5 +133,34 @@ namespace LVRMWebAPI.Controllers
 
 
         }
+
+        [HttpPost]
+        [Route("mergeDealer")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> MergeDealer()
+        {
+            Response _objResponse = new Response();
+
+            try
+            {
+                cronJobManualTriggerCLS.MergeDealer();
+                _objResponse.Data = "";
+                _objResponse.Message = "Merge Dealer successfully";
+                _objResponse.Status = true;
+                //_objResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                return Ok(_objResponse);
+            }
+            catch (Exception ex)
+            {
+                _objResponse.Data = "";
+                _objResponse.Message = "Failed! Please try later.";
+                _objResponse.Status = false;   
+                return BadRequest(_objResponse);
+
+            }
+        }
+
     }
 }

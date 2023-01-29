@@ -62,7 +62,7 @@ namespace LVRMWebAPI.Repository
         {
             try
             {
-                string guid = Guid.NewGuid().ToString();
+                string guid = Guid.NewGuid().ToString().Replace("-","");
                 //IList<DealerResponses> dealerlist = new List<DealerResponses>();
                 DealerResponses dealerDetails = new DealerResponses();
                 int result = 0;

@@ -217,5 +217,27 @@ namespace LVRMWebAPI.CommonCronjob
             }
             return result;
         }
+
+        public void MergeDealer()
+        {
+            int result = 0;
+            try
+            {
+                PSM_DevContext _pSM_DevContext = new PSM_DevContext();
+                ReulstMsg objResult = new ReulstMsg();
+                _pSM_DevContext.LoadStoredProc("dbo.USP_CreateDealerFromFile")
+                  .ExecuteStoredProc((handler) =>
+                  {
+                      objResult = handler.ReadToList<ReulstMsg>().FirstOrDefault();
+                      // do something with your results.
+                  });
+
+                result = Convert.ToInt32(objResult.Message);
+
+            }
+            catch (Exception ex)
+            {
+            }           
+        }
     }
 }
